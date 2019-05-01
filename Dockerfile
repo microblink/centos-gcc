@@ -1,4 +1,4 @@
-FROM centos:7 AS gcc-centos
+FROM centos:7
 
 ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}" \
     GMP_VERSION=6.1.2                                   \
