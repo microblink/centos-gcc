@@ -1,11 +1,12 @@
 FROM centos:7
 
-ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}" \
-    GMP_VERSION=6.1.2                                   \
-    MPFR_VERSION=4.0.2                                  \
-    MPC_VERSION=1.1.0                                   \
-    GCC_VERSION=8.3.0                                   \
-    GDB_VERSION=8.2
+ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
+
+ARG GMP_VERSION=6.1.2
+ARG MPFR_VERSION=4.0.2
+ARG MPC_VERSION=1.1.0
+ARG GCC_VERSION=8.3.0
+ARG GDB_VERSION=8.2
 
 RUN yum -y install gcc-c++ make lzma m4; \
     pushd /home; \
