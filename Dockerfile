@@ -10,7 +10,7 @@ ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}" \
 RUN yum -y install gcc-c++ make lzma m4; \
     pushd /home; \
     mkdir build; \
-    cd buil;d\
+    pushd build; \
     curl -o gmp.tar.xz https://gmplib.org/download/gmp/gmp-$GMP_VERSION.tar.xz; \
     tar xf gmp.tar.xz; \
     mkdir gmp-build; \
