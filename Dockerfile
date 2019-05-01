@@ -42,7 +42,7 @@ RUN yum -y install gcc-c++ make lzma m4; \
     curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz; \
     tar xf gcc.tar.xz; \
     mkdir gcc-build; \
-    pushd gcc-buil;d\
+    pushd gcc-build; \
     ../gcc-$GCC_VERSION/configure --with-gmp=/usr/local --with-mpfr=/usr/local --with-mpc=/usr/local --enable-lto --enable-languages=c,c++ --disable-multilib; \
     make -j$(nproc); \
     make install; \
