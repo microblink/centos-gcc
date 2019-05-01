@@ -37,7 +37,7 @@ RUN yum -y install gcc-c++ make lzma m4; \
     ../mpc-$MPC_VERSION/configure --with-gmp=/usr/local --with-mpfr=/usr/local; \
     make -j$(nproc); \
     make install; \
-    pop;d\
+    popd; \
     rm -rf *; \
     curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz; \
     tar xf gcc.tar.xz; \
@@ -47,7 +47,7 @@ RUN yum -y install gcc-c++ make lzma m4; \
     make -j$(nproc); \
     make install; \
     popd; \
-    rm -rf ;*\
+    rm -rf *; \
     curl -o gdb.tar.xz https://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz; \
     tar xf gdb.tar.xz; \
     mkdir gdb-build; \
