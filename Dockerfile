@@ -8,11 +8,11 @@ ARG GDB_VERSION=8.2
 
 # install build dependencies
 RUN yum -y install gcc-c++ make lzma m4 && \
-    mkdir /home/build && \
-    pushd /home/build
+    mkdir /home/build
 
 # Compile GMP
-RUN curl -o gmp.tar.xz https://gmplib.org/download/gmp/gmp-$GMP_VERSION.tar.xz && \
+RUN cd /home/build && \
+    curl -o gmp.tar.xz https://gmplib.org/download/gmp/gmp-$GMP_VERSION.tar.xz && \
     tar xf gmp.tar.xz && \
     mkdir gmp-build && \
     pushd gmp-build && \
@@ -24,7 +24,8 @@ RUN curl -o gmp.tar.xz https://gmplib.org/download/gmp/gmp-$GMP_VERSION.tar.xz &
     rm -rf *
 
 # Compile MPFR
-RUN curl -o mpfr.tar.xz https://www.mpfr.org/mpfr-current/mpfr-$MPFR_VERSION.tar.xz && \
+RUN cd /home/build && \
+    curl -o mpfr.tar.xz https://www.mpfr.org/mpfr-current/mpfr-$MPFR_VERSION.tar.xz && \
     tar xf mpfr.tar.xz && \
     mkdir mpfr-build && \
     pushd mpfr-build && \
@@ -35,7 +36,8 @@ RUN curl -o mpfr.tar.xz https://www.mpfr.org/mpfr-current/mpfr-$MPFR_VERSION.tar
     rm -rf *
 
 # Compile MPC
-RUN curl -o mpc.tar.gz https://ftp.gnu.org/gnu/mpc/mpc-$MPC_VERSION.tar.gz && \
+RUN cd /home/build && \
+    curl -o mpc.tar.gz https://ftp.gnu.org/gnu/mpc/mpc-$MPC_VERSION.tar.gz && \
     tar xf mpc.tar.gz && \
     mkdir mpc-build && \
     pushd mpc-build && \
@@ -48,7 +50,8 @@ RUN curl -o mpc.tar.gz https://ftp.gnu.org/gnu/mpc/mpc-$MPC_VERSION.tar.gz && \
 # Compile GCC
 ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
 
-RUN curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz && \
+RUN cd /home/build && \
+    curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz && \
     tar xf gcc.tar.xz && \
     mkdir gcc-build && \
     pushd gcc-build && \
@@ -59,13 +62,16 @@ RUN curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION
     rm -rf *
 
 # Compile GDB
-RUN curl -o gdb.tar.xz https://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz && \
+RUN cd /home/build && \
+    curl -o gdb.tar.xz https://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz && \
     tar xf gdb.tar.xz && \
     mkdir gdb-build && \
     pushd gdb-build && \
     ../gdb-$GDB_VERSION/configure && \
     make -j$(nproc) && \
-    make install
+    make install && \
+    popd && \
+    rm -rf *
 
 # Stage 2, copy artifacts to new image and prepare environment
 
