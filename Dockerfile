@@ -5,6 +5,7 @@ ARG MPFR_VERSION=4.0.2
 ARG MPC_VERSION=1.1.0
 ARG GCC_VERSION=8.3.0
 ARG GDB_VERSION=8.2
+ARG VALGRIND_VERSION=3.14.0
 
 # install build dependencies
 RUN yum -y install gcc-c++ make lzma m4 && \
@@ -62,13 +63,29 @@ RUN cd /home/build && \
     rm -rf *
 
 # Compile GDB
+RUN yum -y install texi2html texinfo
+
 RUN cd /home/build && \
     curl -o gdb.tar.xz https://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz && \
     tar xf gdb.tar.xz && \
     mkdir gdb-build && \
     pushd gdb-build && \
-    ../gdb-$GDB_VERSION/configure && \
+    ../gdb-$GDB_VERSION/configure --enable-lto && \
     make -j$(nproc) && \
+    make install && \
+    popd && \
+    rm -rf *
+
+# Compile Valgrind
+RUN yum -y install bzip2
+
+RUN cd /home/build && \
+    curl -o valgrind.tar.bz2 https://sourceware.org/pub/valgrind/valgrind-${VALGRIND_VERSION}.tar.bz2 && \
+    tar xf valgrind.tar.bz2 && \
+    mkdir valgrind-build && \
+    pushd valgrind-build && \
+    ../valgrind-${VALGRIND_VERSION}/configure --enable-lto --enable-only64bit   && \
+    make -j $(nproc)   && \
     make install && \
     popd && \
     rm -rf *
