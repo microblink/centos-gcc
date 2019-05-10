@@ -91,6 +91,9 @@ RUN cd /home/build && \
 FROM centos:7
 COPY --from=builder /usr/local /usr/local/
 
+# install glibc developer headers
+RUN yum -y install glibc-devel
+
 ENV AR="/usr/local/bin/gcc-ar"                          \
     RANLIB="/usr/local/bin/gcc-ranlib"                  \
     NM="/usr/local/bin/gcc-nm"                          \
