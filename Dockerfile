@@ -12,7 +12,7 @@ RUN cd /home/build && \
     tar xf gmp.tar.xz && \
     mkdir gmp-build && \
     pushd gmp-build && \
-    ../gmp-$GMP_VERSION/configure && \
+    ../gmp-$GMP_VERSION/configure --enable-fat && \
     make -j$(nproc) && \
     make -j$(nproc) check && \
     make install && \
