@@ -96,13 +96,10 @@ RUN cd /home/build && \
 FROM centos:7
 COPY --from=builder /usr/local /usr/local/
 
-# install glibc developer headers and substitute main libstdc++.so.6
-RUN yum -y install glibc-devel && \
-    cd /lib64 && \
-    rm libstdc++.so.6 && \
-    ln -s /usr/local/lib64/libstdc++.so.6
+# install glibc developer headers
+RUN yum -y install glibc-devel
 
 ENV AR="/usr/local/bin/gcc-ar" \
     NM="/usr/local/bin/gcc-nm" \
     RANLIB="/usr/local/bin/gcc-ranlib" \
-    LD_LIBRARY_PATH="/usr/local/lib"
+    LD_LIBRARY_PATH="/usr/local/lib:/usr/local/lib64"
