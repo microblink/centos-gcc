@@ -1,15 +1,10 @@
 FROM centos:7 AS builder
 
-ARG GMP_VERSION=6.1.2
-ARG MPFR_VERSION=4.0.2
-ARG MPC_VERSION=1.1.0
-ARG GCC_VERSION=8.3.0
-ARG GDB_VERSION=8.2
-ARG VALGRIND_VERSION=3.14.0
-
 # install build dependencies
 RUN yum -y install gcc-c++ make lzma m4 texi2html texinfo bzip2 && \
     mkdir /home/build
+
+ARG GMP_VERSION=6.1.2
 
 # Compile GMP
 RUN cd /home/build && \
@@ -24,6 +19,8 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
+ARG MPFR_VERSION=4.0.2
+
 # Compile MPFR
 RUN cd /home/build && \
     curl -o mpfr.tar.xz https://www.mpfr.org/mpfr-current/mpfr-$MPFR_VERSION.tar.xz && \
@@ -35,6 +32,8 @@ RUN cd /home/build && \
     make install && \
     popd && \
     rm -rf *
+
+ARG MPC_VERSION=1.1.0
 
 # Compile MPC
 RUN cd /home/build && \
@@ -48,6 +47,8 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
+ARG VALGRIND_VERSION=3.14.0
+
 # Compile Valgrind
 RUN cd /home/build && \
     curl -o valgrind.tar.bz2 https://sourceware.org/pub/valgrind/valgrind-${VALGRIND_VERSION}.tar.bz2 && \
@@ -59,6 +60,8 @@ RUN cd /home/build && \
     make install && \
     popd && \
     rm -rf *
+
+ARG GDB_VERSION=8.2
 
 # Compile GDB
 RUN cd /home/build && \
@@ -74,6 +77,8 @@ RUN cd /home/build && \
 
 # Compile GCC
 ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
+
+ARG GCC_VERSION=8.3.0
 
 RUN cd /home/build && \
     curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz && \
@@ -93,7 +98,7 @@ COPY --from=builder /usr/local /usr/local/
 
 # install glibc developer headers and substitute main libstdc++.so.6
 RUN yum -y install glibc-devel && \
-    cd /usr/lib64 && \
+    cd /lib64 && \
     rm libstdc++.so.6 && \
     ln -s /usr/local/lib64/libstdc++.so.6
 
