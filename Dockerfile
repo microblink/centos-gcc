@@ -47,6 +47,20 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
+ARG BINUTILS_VERSION=2.32
+
+# Compile Binutils
+RUN cd /home/build && \
+    curl -o binutils.tar.xz https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.xz && \
+    tar xf binutils.tar.xz && \
+    mkdir binutils-build && \
+    pushd binutils-build && \
+    ../binutils-${BINUTILS_VERSION}/configure --enable-gold=yes --enable-bfd=yes --enable-lto && \
+    make -j $(nproc) && \
+    make install && \
+    popd && \
+    rm -rf *
+
 ARG VALGRIND_VERSION=3.14.0
 
 # Compile Valgrind
