@@ -111,7 +111,7 @@ FROM centos:7
 COPY --from=builder /usr/local /usr/local/
 
 # install glibc developer headers
-RUN yum -y install glibc-devel
+RUN yum -y install glibc-devel glibc-static
 
 ENV AR="/usr/local/bin/gcc-ar" \
     NM="/usr/local/bin/gcc-nm" \
