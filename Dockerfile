@@ -4,7 +4,7 @@ FROM centos:7 AS builder
 RUN yum -y install gcc-c++ make lzma m4 texi2html texinfo bzip2 && \
     mkdir /home/build
 
-ARG GMP_VERSION=6.1.2
+ARG GMP_VERSION=6.2.0
 
 # Compile GMP
 RUN cd /home/build && \
@@ -47,7 +47,7 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
-ARG BINUTILS_VERSION=2.32
+ARG BINUTILS_VERSION=2.34
 
 # Compile Binutils
 RUN cd /home/build && \
@@ -61,7 +61,7 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
-ARG VALGRIND_VERSION=3.14.0
+ARG VALGRIND_VERSION=3.15.0
 
 # Compile Valgrind
 RUN cd /home/build && \
@@ -75,7 +75,7 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
-ARG GDB_VERSION=8.3
+ARG GDB_VERSION=9.1
 
 # Compile GDB
 RUN cd /home/build && \
@@ -92,7 +92,7 @@ RUN cd /home/build && \
 # Compile GCC
 ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
 
-ARG GCC_VERSION=9.3.0
+ARG GCC_VERSION=10.1.0
 
 RUN cd /home/build && \
     curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz && \
