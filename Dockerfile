@@ -19,11 +19,12 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
-ARG MPFR_VERSION=4.0.2
+ARG MPFR_VERSION=4.1.0
 
 # Compile MPFR
+# URL not working : https://www.mpfr.org/mpfr-current/mprf-$MPFR_VERSION.tar.xz
 RUN cd /home/build && \
-    curl -o mpfr.tar.xz https://www.mpfr.org/mpfr-current/mpfr-$MPFR_VERSION.tar.xz && \
+    curl -o mpfr.tar.xz https://ftp.gnu.org/gnu/mpfr/mpfr-$MPFR_VERSION.tar.gz && \
     tar xf mpfr.tar.xz && \
     mkdir mpfr-build && \
     pushd mpfr-build && \
