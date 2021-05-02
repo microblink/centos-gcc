@@ -76,7 +76,7 @@ RUN cd /home/build && \
     popd && \
     rm -rf *
 
-ARG GDB_VERSION=10.1
+ARG GDB_VERSION=10.2
 
 # Compile GDB
 RUN cd /home/build && \
@@ -93,7 +93,7 @@ RUN cd /home/build && \
 # Compile GCC
 ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
 
-ARG GCC_VERSION=10.3.0
+ARG GCC_VERSION=11.1.0
 
 RUN cd /home/build && \
     curl -o gcc.tar.xz http://robotlab.itk.ppke.hu/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz && \
